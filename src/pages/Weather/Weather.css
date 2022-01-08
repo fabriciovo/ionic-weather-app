@@ -7,6 +7,13 @@
   transform: translateY(-50%);
 }
 
+ion-card {
+  display: inline-block;
+  width: 90vw;
+  height: 90vh;
+  max-width: 456px;
+}
+
 .container strong {
   font-size: 22px;
   line-height: 26px;
@@ -14,7 +21,7 @@
 
 .container p {
   line-height: 22px;
-  color: #8c8c8c;
+  color: white;
 }
 
 .temp {
@@ -37,7 +44,7 @@ span {
 
 .text {
   line-height: 22px;
-  color: #8c8c8c;
+  color: white;
 }
 
 

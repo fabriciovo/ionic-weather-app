@@ -1,5 +1,5 @@
 import "./Weather.css";
-import { IonWeatherPage } from "./Style";
+import { IonWeatherPage, TempText } from "./Style";
 import { updateForecast } from "../../utils/api";
 import { useLayoutEffect, useState } from "react";
 import {
@@ -15,6 +15,7 @@ import {
   IonCardSubtitle,
   IonCardTitle,
   IonCardContent,
+  IonLabel,
 } from "@ionic/react";
 import { locateOutline } from "ionicons/icons";
 import { Geolocation } from "@ionic-native/geolocation";
@@ -125,63 +126,54 @@ const Weather: React.FC = () => {
   return (
     <IonWeatherPage fullscreen color={backgroundType[weather[0].description]}>
       <div className="container">
-        <strong className="city">
-          {name} | {country}
-        </strong>
-        <p>{weather[0].description}</p>
-        <p className="temp">
-          {temp}
-          <span>c</span>
-        </p>
-        <IonGrid>
-          <IonRow>
-            <IonCol size="6">
-              <div>
-                <p className="minTemp">
-                  {temp_min}
-                  <span>c</span>
-                </p>
-                <p className="text">min</p>
-              </div>
-            </IonCol>
-            <IonCol size="6">
-              <div>
-                <p className="maxTemp">
-                  {temp_max}
-                  <span>c</span>
-                </p>
-                <p className="text">max</p>
-              </div>
-            </IonCol>
-            <IonCol size="12">
-              <img
-                src={`http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
-              />
-            </IonCol>
-            <IonCol size="12">
-              <IonIcon
-                slot="icon-only"
-                icon={locateOutline}
-                style={{ paddingRight: 16 }}
-              />
-              <IonLoading
-                isOpen={loading}
-                message={"Getting Location..."}
-                onDidDismiss={() => setLoading(false)}
-              />
-              <IonToast
-                isOpen={error.showError}
-                message={error?.message}
-                duration={3000}
-                onDidDismiss={() =>
-                  setError({ showError: false, message: undefined })
-                }
-              />
-              <IonButton onClick={getLocation}>Get Location</IonButton>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-
+        <IonCard>
+          <IonCardHeader>
+            <IonCardTitle>
+              {name} | {country}
+            </IonCardTitle>
+            <IonCardSubtitle style={{ margin: 8 }}>
+              {weather[0].description}
+            </IonCardSubtitle>
+          </IonCardHeader>
+          <IonCardContent>
+            <IonGrid>
+              <IonRow>
+                <IonCol size="12">{temp.toFixed(0)}</IonCol>
+                <IonCol size="6">{temp_min.toFixed(0)}</IonCol>
+                <IonCol size="6">{temp_max.toFixed(0)}</IonCol>
+                <IonCol size="12">
+                  <img
+                    src={`http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
+                  />
+                </IonCol>
+                <IonCol size="12">
+                  <IonButton onClick={getLocation}>
+                    <IonIcon
+                      slot="icon-only"
+                      icon={locateOutline}
+                      style={{ paddingRight: 8 }}
+                      size="small"
+                    />
+                    Get Location
+                  </IonButton>
+                </IonCol>
+              </IonRow>
+            </IonGrid>
+          </IonCardContent>
+        </IonCard>
+        <IonLoading
+          isOpen={loading}
+          message={"Getting Location..."}
+          onDidDismiss={() => setLoading(false)}
+        />
+        <IonToast
+          isOpen={error.showError}
+          message={error?.message}
+          duration={3000}
+          onDidDismiss={() =>
+            setError({ showError: false, message: undefined })
+          }
+        />
       </div>
     </IonWeatherPage>
   );
