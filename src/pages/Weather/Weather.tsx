@@ -1,6 +1,13 @@
-import "./Weather.css";
-import { IonWeatherPage, TempText } from "./Style";
-import { updateForecast } from "../../utils/api";
+import {
+  IonWeatherPage,
+  TempText,
+  Container,
+  SubTempText,
+  DescriptionText,
+  CityText,
+  Celcius,
+} from "./Style";
+import { WeatherAPI } from "../../utils/api";
 import { useLayoutEffect, useState } from "react";
 import {
   IonCol,
@@ -10,56 +17,12 @@ import {
   IonButton,
   IonToast,
   IonLoading,
-  IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonCardContent,
-  IonLabel,
 } from "@ionic/react";
 import { locateOutline } from "ionicons/icons";
 import { Geolocation } from "@ionic-native/geolocation";
-
-const backgroundType: any = {
-  "clear sky": "linear-gradient(#4F4F4F, #959595)",
-  "few clouds": "linear-gradient(#108DC7, #EF8E38)",
-  "scattered clouds": "linear-gradient(#4F4F4F, #959595)",
-  "broken clouds": "linear-gradient(#4F4F4F, #959595)",
-  "shower rain": "linear-gradient(#4F4F4F, #959595)",
-  rain: "linear-gradient(#4F4F4F, #959595)",
-  snow: "linear-gradient(#4F4F4F, #959595)",
-  thunderstorm: "linear-gradient(#4F4F4F, #959595)",
-  mist: "linear-gradient(#4F4F4F, #959595)",
-};
-
-interface LocationError {
-  showError: boolean;
-  message?: string;
-}
-
-interface Wheater {
-  name: string;
-  coord: {
-    lon: number;
-    lat: number;
-  };
-  main: {
-    temp: number;
-    feels_like: number;
-    humidity: number;
-    pressure: number;
-    temp_max: number;
-    temp_min: number;
-  };
-  weather: {
-    description: string;
-    icon: string;
-    main: string;
-  }[];
-  sys: {
-    country: string;
-  };
-}
+import { emptyWeather, IWheater } from "../../Interfaces/IWeather";
+import { emptyLocationError, ILocationError } from "../../Interfaces/IError";
+import { backgroundType } from "../../utils/utils";
 
 const Weather: React.FC = () => {
   const [
@@ -70,36 +33,9 @@ const Weather: React.FC = () => {
       sys: { country },
     },
     setWeather,
-  ] = useState<Wheater>({
-    name: "",
-    coord: {
-      lon: 0,
-      lat: 0,
-    },
-    main: {
-      temp: 0,
-      feels_like: 0,
-      humidity: 0,
-      pressure: 0,
-      temp_max: 0,
-      temp_min: 0,
-    },
-    weather: [
-      {
-        description: "",
-        icon: "",
-        main: "",
-      },
-    ],
-    sys: {
-      country: "",
-    },
-  });
+  ] = useState<IWheater>(emptyWeather);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<LocationError>({
-    showError: false,
-    message: undefined,
-  });
+  const [error, setError] = useState<ILocationError>(emptyLocationError);
 
   useLayoutEffect(() => {
     getLocation();
@@ -108,8 +44,9 @@ const Weather: React.FC = () => {
   async function getLocation() {
     setLoading(true);
     try {
+      const api:WeatherAPI = new WeatherAPI()
       const position = await Geolocation.getCurrentPosition();
-      const data = await updateForecast(position);
+      const data = await api.updateForecast(position);
       setError({ showError: false, message: undefined });
       setLoading(false);
       setWeather(data);
@@ -125,42 +62,47 @@ const Weather: React.FC = () => {
 
   return (
     <IonWeatherPage fullscreen color={backgroundType[weather[0].description]}>
-      <div className="container">
-        <IonCard>
-          <IonCardHeader>
-            <IonCardTitle>
-              {name} | {country}
-            </IonCardTitle>
-            <IonCardSubtitle style={{ margin: 8 }}>
-              {weather[0].description}
-            </IonCardSubtitle>
-          </IonCardHeader>
-          <IonCardContent>
-            <IonGrid>
-              <IonRow>
-                <IonCol size="12">{temp.toFixed(0)}</IonCol>
-                <IonCol size="6">{temp_min.toFixed(0)}</IonCol>
-                <IonCol size="6">{temp_max.toFixed(0)}</IonCol>
-                <IonCol size="12">
-                  <img
-                    src={`http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
-                  />
-                </IonCol>
-                <IonCol size="12">
-                  <IonButton onClick={getLocation}>
-                    <IonIcon
-                      slot="icon-only"
-                      icon={locateOutline}
-                      style={{ paddingRight: 8 }}
-                      size="small"
-                    />
-                    Get Location
-                  </IonButton>
-                </IonCol>
-              </IonRow>
-            </IonGrid>
-          </IonCardContent>
-        </IonCard>
+      <Container>
+        <CityText>
+          {name} | {country}
+        </CityText>
+        <DescriptionText>{weather[0].description}</DescriptionText>
+        <IonGrid>
+          <IonRow>
+            <IonCol size="12" style={{ height: "16vh" }}>
+              <TempText>
+                {temp.toFixed(0)}
+                <Celcius>c</Celcius>
+              </TempText>
+            </IonCol>
+            <IonCol size="6" style={{ height: "16vh" }}>
+              <SubTempText>
+                {temp_min.toFixed(0)}
+                <Celcius>c</Celcius>
+                <span>min</span>
+              </SubTempText>
+            </IonCol>
+            <IonCol size="6" style={{ height: "16vh" }}>
+              <SubTempText>
+                {temp_max.toFixed(0)}
+                <Celcius>c</Celcius>
+                <span>max</span>
+              </SubTempText>
+            </IonCol>
+            <IonCol size="12" style={{ height: "16vh" }}>
+              <img src={`http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`} />
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+        <IonButton onClick={getLocation}>
+          <IonIcon
+            slot="icon-only"
+            icon={locateOutline}
+            style={{ paddingRight: 8 }}
+            size="small"
+          />
+          Get Location
+        </IonButton>
         <IonLoading
           isOpen={loading}
           message={"Getting Location..."}
@@ -174,7 +116,7 @@ const Weather: React.FC = () => {
             setError({ showError: false, message: undefined })
           }
         />
-      </div>
+      </Container>
     </IonWeatherPage>
   );
 };

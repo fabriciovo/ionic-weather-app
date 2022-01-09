@@ -1,4 +1,4 @@
-![prints]()
+![prints](./doc/ionic_weather_app.png)
 
 # [Weather App](https://github.com/fabriciovo/ionic-weather-app/)
 A local weather app that fetches weather forecast from Openweathermap.org. A  Web App built with React and Ionic.
