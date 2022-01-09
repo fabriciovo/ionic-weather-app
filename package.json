@@ -1,4 +1,5 @@
 {
+  "homepage": "http://fabriciovo.github.io/ionic-weather-app",
   "name": "ionic-weather-app",
   "version": "0.0.1",
   "private": true,
@@ -50,7 +51,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -72,7 +75,8 @@
   },
   "devDependencies": {
     "@capacitor/cli": "3.3.4",
-    "@types/styled-components": "^5.1.19"
+    "@types/styled-components": "^5.1.19",
+    "gh-pages": "^3.2.3"
   },
   "description": "An Ionic project"
 }
