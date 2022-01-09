@@ -5,7 +5,7 @@ A local weather app that fetches weather forecast from Openweathermap.org. A  We
 
 ## Features
 * Get weather of current location
-* Different theme depending on time (day or night)
+* Different theme depending on time
 * Different weather icon depending on weather
 
 ## Built With
