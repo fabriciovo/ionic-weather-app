@@ -19,7 +19,7 @@ A local weather app that fetches weather forecast from Openweathermap.org. A  We
 
 ## Credits
 
-- [Fabricio Varisco Oliveira][link-author]
+- [Fabricio Varisco Oliveira]
 
 
 
