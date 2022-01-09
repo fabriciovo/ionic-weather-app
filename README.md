@@ -15,7 +15,7 @@ A local weather app that fetches weather forecast from Openweathermap.org. A  We
 
 ## App
 * Github Page: https://fabriciovo.github.io/ionic-weather-app/
-* Download APK: https://1drv.ms/u/s!AtXs3E6q6Sq7xY8v8EeKX_-kuRFkeA?e=4CmF4e
+* Download APK: --
 
 ## Credits
 
