@@ -1,4 +1,5 @@
 import { emptyWeather } from "../Interfaces/IWeather";
+import dotenv from 'dotenv'
 
 export class WeatherAPI {
   public async updateForecast(position: any) {
@@ -12,7 +13,7 @@ export class WeatherAPI {
   }
 
   private async getForecast(coordinates: any) {
-    const appId = "40ac787c83b2118dc28ff0eda09e5d95";
+    const appId = "40ac787c83b2118dc28ff0eda09e5d95"
     const endpoint = `https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.latitude}&lon=${coordinates.longitude}&appid=${appId}&units=metric`;
     const response = await fetch(endpoint);
     return await response.json();
@@ -21,4 +22,5 @@ export class WeatherAPI {
   private getErrorData() {
     return emptyWeather;
   }
+
 }
