@@ -1,5 +1,4 @@
 import { emptyWeather } from "../Interfaces/IWeather";
-import dotenv from 'dotenv'
 
 export class WeatherAPI {
   public async updateForecast(position: any) {
