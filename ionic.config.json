@@ -1,5 +1,5 @@
 {
-  "name": "ionic-weather-app",
+  "name": "myApp",
   "integrations": {
     "capacitor": {}
   },

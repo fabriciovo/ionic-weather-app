@@ -10,8 +10,6 @@
 
 # production
 /build
-/Android
-/ios
 
 # misc
 .DS_Store
@@ -28,5 +26,3 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
-
-.env
