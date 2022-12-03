@@ -14,8 +14,7 @@ A local weather app that fetches weather forecast from Openweathermap.org. A  We
 * Typescript
 
 ## App
-* Vercel Page: https://vercel.com/fabriciovo/ionic-weather-app
-* Download APK: --
+* Vercel Page: https://ionic-weather-app-three.vercel.app/
 
 ## Credits
 
